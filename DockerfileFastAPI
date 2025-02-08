@@ -16,22 +16,19 @@
 #ENTRYPOINT ["./app/docker-entrypoint.sh"]
 
 
-FROM python:3.10-slim
+FROM python:3.10
 
 ENV PYTHONUNBUFFERED=1
 
 RUN mkdir /app
 
-COPY .requirements.txt /app/
+COPY requirements.txt /app/
 
 RUN python -m pip install --upgrade pip
-
 RUN python -m pip install -r /app/requirements.txt
 
-#COPY . /app/
-#COPY .env /app/
-#COPY app /app/
-#COPY database /app/
-#COPY config_data /app/
+COPY .env .env
+COPY config_data config_data
+COPY ./app ./app
 
-WORKDIR /app
+ENTRYPOINT ["./app/docker-entrypoint.sh"]
