@@ -1,6 +1,6 @@
 <div style="text-align: center;">
 <img src="./images_readme/logo.jpg" width="650" alt="logo"/>
-<h1 style="text-align: center">Витрина для онлайн продажи социальной сети ВКонтакте.</h1>
+<h1 style="text-align: center">Витрина для онлайн продажи из социальных сетей ВКонтакте.</h1>
 </div>
 
 ### <img src="images_readme/instruc.jpg" width="70"/> Описание приложения.
