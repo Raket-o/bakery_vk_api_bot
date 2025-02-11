@@ -1,4 +1,4 @@
-"""the schematics module for answering about the category"""
+"""Модуль схем категорий"""
 
 from typing import List
 

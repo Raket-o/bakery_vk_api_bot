@@ -1,4 +1,4 @@
-"""the main module"""
+"""Главный модуль запуска FastAPI"""
 
 from contextlib import asynccontextmanager
 
@@ -7,16 +7,21 @@ from asyncpg.exceptions import InvalidCatalogNameError
 from fastapi import APIRouter, FastAPI
 
 from app.api.categories_api import router as categories_api_router
-# from app.api.products_api import router as products_api_router
+from app.api.products_api import router as products_api_router
 from app.database.connect import Base, engine, session
 from app.database.transactions import create_db
 from app.utils.filling_databases import filling_categories
 
-from config_data.config import DB_TESTS
+from config_data.config import DB_FILLING, DB_TESTS
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """
+    Функция жизненного цикла FastAPI. При запуске сервера
+    создаётся база данных. При завершении работы сервера
+    закрывает соединение с базой данных
+    """
     try:
         async with engine.begin() as _:
             pass
@@ -34,6 +39,9 @@ async def lifespan(app: FastAPI):
                 await conn.run_sync(Base.metadata.create_all)
             await filling_categories()
 
+        elif DB_FILLING:
+            await filling_categories()
+
         else:
             async with engine.begin() as conn:
                 await conn.run_sync(Base.metadata.create_all)
@@ -47,7 +55,7 @@ app = FastAPI(lifespan=lifespan)
 
 api_router = APIRouter(prefix="/api")
 api_router.include_router(categories_api_router)
-# api_router.include_router(products_api_router)
+api_router.include_router(products_api_router)
 
 app.include_router(api_router)
 

@@ -1,4 +1,4 @@
-"""module for working with transactions"""
+"""Модуль работы с запросами к базе данных"""
 
 import asyncpg
 from config_data.config import (
@@ -17,8 +17,10 @@ from app.database.models import Category, Product
 
 
 async def create_db() -> None:
-    """the function creates a database"""
-    db_name = "bakery_vk_api_bot_tests" if DB_TESTS else DB_NAME
+    """
+    Функция создаёт базу данных
+    """
+    db_name = DB_NAME + "_tests" if DB_TESTS else DB_NAME
     cursor = await asyncpg.connect(
         f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}"
     )
@@ -26,18 +28,24 @@ async def create_db() -> None:
 
 
 async def get_categories_db() -> list[Category]:
-
-    qs = await session.execute(select(Category))
+    """
+    Функция возвращает все категории
+    """
+    qs = await session.execute(select(Category).order_by(Category.name))
     return qs.all()
 
 
-async def get_products_by_category_db(category: int) -> list[Category]:
-
-    qs = await session.execute(select(Product).filter(Product.category_id == category))
+async def get_products_by_category_db(category: str) -> list[Category]:
+    """
+    Функция возвращает все товары по определённой переданной категории
+    """
+    qs = await session.execute(select(Product).join(Category, Category.id == Product.category_id).filter(Category.name == category).order_by(Product.name))
     return qs.all()
 
 
-async def get_product_detail_db(id: int) -> list[Category]:
-
-    qs = await session.execute(select(Product).filter(Product.id == id))
-    return qs.one()
+async def get_product_detail_db(product_name: str) -> Product:
+    """
+    Функция возвращает всё информацию о товаре
+    """
+    qs = await session.execute(select(Product).filter(Product.name == product_name))
+    return qs.scalar()

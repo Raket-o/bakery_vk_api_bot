@@ -1,18 +1,23 @@
-"""the schematics module for answering about the product"""
+"""Модуль схем товара"""
+
 
 from typing import List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Base64Bytes
 
 
 class ProductIdSchemas(BaseModel):
     id: int
 
 
-class ProductSchemas(ProductIdSchemas):
+class ProductNameSchemas(ProductIdSchemas):
     name: str
+
+
+class ProductSchemas(ProductNameSchemas):
     description: str
+    image: Base64Bytes
 
 
 class ListProductSchemas(BaseModel):
-    products: List[ProductSchemas]
+    products: List[ProductNameSchemas]

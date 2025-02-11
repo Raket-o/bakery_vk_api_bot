@@ -1,4 +1,4 @@
-"""database connection module"""
+"""Модуль создания подключения к базе данных"""
 
 from config_data.config import (
     DB_HOST,

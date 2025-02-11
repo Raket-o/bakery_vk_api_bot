@@ -1,0 +1,18 @@
+FROM python:3.10
+
+ENV PYTHONUNBUFFERED=1
+
+RUN mkdir /vk_api_bot
+
+COPY ../requirements.txt .
+
+RUN python -m pip install --upgrade pip
+RUN python -m pip install -r ./requirements.txt
+
+COPY ./config_data ./vk_api_bot/config_data
+COPY .env .
+COPY ./vk_api_bot ./vk_api_bot
+
+WORKDIR ./vk_api_bot
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
