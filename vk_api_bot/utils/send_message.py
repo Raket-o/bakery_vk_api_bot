@@ -1,8 +1,7 @@
 """Модуль отправки сообщений VK_API"""
 
-from vk_api.utils import get_random_id
-
 from loader import VK
+from vk_api.utils import get_random_id
 
 
 def sending_messages(user_id, message, keyboard=None, attachment=None):

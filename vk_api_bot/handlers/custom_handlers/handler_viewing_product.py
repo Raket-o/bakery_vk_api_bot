@@ -8,7 +8,6 @@ from utils.manager_api import ApiManager
 from utils.send_message import sending_messages
 from utils.upload_photo_VK_to_bytes import VkUploadCustom
 
-
 api = ApiManager
 upload = VkUploadCustom(VK_SESSION)
 
@@ -17,11 +16,14 @@ def processing_viewing_product(user_state, user_id: int, message: str) -> None:
     """
     Функция запускает при состоянии viewing_product.
     Делает запрос с сервера бекэнда об информации выбранного продукта,
-    выводит ёё пользователю и меняет состояния пользователя на view_category.
+    выводит ёё пользователю и меняет состояние пользователя на view_category.
     Если такого продукта нет, то возвращает пользователю
     текст "Такого товара у нас нет"
     """
-    response = api.send_get(url="products/<str:product_name>", params={"product_name": message.lower()})
+    response = api.send_get(
+        url="products/<str:product_name>",
+        params={"product_name": message.lower()}
+    )
     if response.json().get("id"):
         name = response.json().get("name")
         description = response.json().get("description")
@@ -33,7 +35,11 @@ def processing_viewing_product(user_state, user_id: int, message: str) -> None:
             user_id,
             message=f"Наименование: {name.title()}\n"
                     f"Описание: {description.capitalize()}",
-            keyboard=create_keyboard_v1(text="вернуться к товарам", additional_btn=True, inline=True),
+            keyboard=create_keyboard_v1(
+                text="вернуться к товарам",
+                additional_btn=True,
+                inline=True
+            ),
             attachment=attachment,
         )
         user_state.view_category()
@@ -41,5 +47,5 @@ def processing_viewing_product(user_state, user_id: int, message: str) -> None:
     else:
         sending_messages(
             user_id,
-            message=f"Такого товара у нас нет"
+            message="Такого товара у нас нет"
         )

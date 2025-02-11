@@ -1,16 +1,16 @@
-"""Главный можель запуска VK_API бота"""
+"""Главный модуль запуска VK_API бота"""
 
-from vk_api.longpoll import VkEventType
-
-from loader import LONGPOLL
-from handlers.custom_handlers.handler_init import processing_init
 from handlers.custom_handlers.handler_init import processing_init
 from handlers.custom_handlers.handler_main_menu import processing_main_menu
-from handlers.custom_handlers.handler_viewing_category import processing_viewing_category
-from handlers.custom_handlers.handler_viewing_product import processing_viewing_product
+from handlers.custom_handlers.handler_viewing_category import \
+    processing_viewing_category
+from handlers.custom_handlers.handler_viewing_product import \
+    processing_viewing_product
+from loader import LONGPOLL
 from states.states import UserState, create_state_machine
+from vk_api.longpoll import VkEventType
 
-users = {} # База для хранения состояний пользователей
+users = {}  # База для хранения состояний пользователей
 
 
 def handler_event(event):

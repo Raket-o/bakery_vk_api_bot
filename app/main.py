@@ -11,7 +11,6 @@ from app.api.products_api import router as products_api_router
 from app.database.connect import Base, engine, session
 from app.database.transactions import create_db
 from app.utils.filling_databases import filling_categories
-
 from config_data.config import DB_FILLING, DB_TESTS
 
 

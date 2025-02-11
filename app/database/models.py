@@ -1,10 +1,8 @@
 """Модуль с таблицами и полями базы данных"""
 
-from typing import Dict
-
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.orm import relationship
-from sqlalchemy.types import Integer, String, LargeBinary
+from sqlalchemy.types import Integer, LargeBinary, String
 
 from app.database.connect import Base
 
@@ -48,7 +46,8 @@ class Product(Base):
     description = Column(String(400), nullable=True)
     image = Column(LargeBinary)
     category_id = Column(
-        Integer, ForeignKey("categories.id", ondelete="CASCADE"), nullable=False
+        Integer, ForeignKey("categories.id", ondelete="CASCADE"),
+        nullable=False
     )
 
     def get_name(self) -> dict[str, str]:

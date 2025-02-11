@@ -1,7 +1,5 @@
 """Модуль менеджера API."""
 
-from typing import Any
-
 import requests
 from requests import Response
 

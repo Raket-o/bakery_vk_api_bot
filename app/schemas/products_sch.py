@@ -3,7 +3,7 @@
 
 from typing import List
 
-from pydantic import BaseModel, Base64Bytes
+from pydantic import Base64Bytes, BaseModel
 
 
 class ProductIdSchemas(BaseModel):

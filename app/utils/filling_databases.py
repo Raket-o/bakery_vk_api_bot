@@ -1,21 +1,21 @@
 """Модуль для предзаполнения базы данных информацией"""
 
-import aiofiles
 import base64
 from pathlib import Path
 
+import aiofiles
 from sqlalchemy.future import select
 
 from app.database.connect import engine, session
 from app.database.models import Category, Product
-
 
 BASE_DIR = Path(__file__).resolve().parent
 
 
 async def encoded_images_to_string(path_image: str) -> base64:
     """
-    Функция принимает путь до файла(картинки) и возвращает эту картинку в байтах
+    Функция принимает путь до файла(картинки)
+    и возвращает эту картинку в байтах
     """
     async with aiofiles.open(path_image, "rb") as file:
         data = await file.read()

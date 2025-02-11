@@ -1,6 +1,6 @@
 """Модуль загрузки медиа(картинок)"""
 
-from io import BytesIO, BufferedReader
+from io import BufferedReader, BytesIO
 
 from vk_api import VkUpload
 from vk_api.upload import FilesOpener
@@ -52,7 +52,12 @@ class VkUploadCustom(VkUpload):
 
     :param vk: объект :class:`VkApi` или :class:`VkApiMethod`
     """
-    def photo_messages(self, photos=None, bim: bytes=None, peer_id=None):
+    def photo_messages(
+            self,
+            photos=None,
+            bim: bytes = None,
+            peer_id=None
+    ):
         """ Загрузка изображений в сообщения
         :param photos: путь к изображению(ям) или file-like объект(ы)
         :type photos: str or list
@@ -61,7 +66,9 @@ class VkUploadCustom(VkUpload):
         :type peer_id: int
         :type bim: bytes
         """
-        url = self.vk.photos.getMessagesUploadServer(peer_id=peer_id)['upload_url']
+        url = self.vk.photos.getMessagesUploadServer(
+            peer_id=peer_id
+        )['upload_url']
 
         with FilesOpenerCustom(photos, bim) as photo_files:
             response = self.http.post(url, files=photo_files)

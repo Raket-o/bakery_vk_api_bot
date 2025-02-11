@@ -1,18 +1,15 @@
 """Модуль обработчик API категорий"""
 
-from typing import Annotated, Any, Dict, List
+from typing import Any
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
-from app.database.models import Category
 from app.database.transactions import (
     get_categories_db,
-    get_product_detail_db,
     get_products_by_category_db,
 )
-from app.schemas.categories_sch import CategorySchemas, CategoryIdSchemas, ListCategorySchemas
-from app.schemas.products_sch import ListProductSchemas, ProductSchemas
-
+from app.schemas.categories_sch import ListCategorySchemas
+from app.schemas.products_sch import ListProductSchemas
 
 router = APIRouter(prefix="/categories", tags=["categories"])
 
@@ -27,7 +24,8 @@ router = APIRouter(prefix="/categories", tags=["categories"])
 async def get_categories(
 ) -> dict[str, list[Any]]:
     """
-    Хендлер для эндпоинта /categories. При запросе возвращает все категории товара.
+    Хендлер для эндпоинта /categories.
+    При запросе возвращает все категории товара.
     """
     res = await get_categories_db()
     return {"categories": [category[0].to_json() for category in res]}
@@ -44,8 +42,10 @@ async def get_products_by_category(
     category_name: str
 ) -> dict[str, list[Any]]:
     """
-    Хендлер для эндпоинта /categories/"наименование_категории". При запросе
-    необходимо передать в параметрах "наименование_категории" возвращает все продукта по данной категории.
+    Хендлер для эндпоинта /categories/"наименование_категории".
+    При запросе необходимо передать в параметрах
+    "наименование_категории" возвращает все продукта
+    по данной категории.
     """
     category_name = bytes(category_name, encoding="UTF-8").decode().lower()
     res = await get_products_by_category_db(category_name)
