@@ -1,4 +1,6 @@
 """Главный модуль запуска FastAPI"""
+import sys
+sys.path.append(".")
 
 from contextlib import asynccontextmanager
 

@@ -1,5 +1,8 @@
 """Главный модуль запуска VK_API бота"""
 
+import sys
+sys.path.append(".")
+
 from handlers.custom_handlers.handler_init import processing_init
 from handlers.custom_handlers.handler_main_menu import processing_main_menu
 from handlers.custom_handlers.handler_viewing_category import \

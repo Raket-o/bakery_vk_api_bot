@@ -1,18 +1,18 @@
-FROM python:3.10
+FROM python:3.13.2
 
 ENV PYTHONUNBUFFERED=1
 
 RUN mkdir /vk_api_bot
 
-COPY ../requirements.txt .
+RUN pip install uv
 
-RUN python -m pip install --upgrade pip
-RUN python -m pip install -r ./requirements.txt
+COPY pyproject.toml .
 
-COPY ./config_data ./vk_api_bot/config_data
-COPY .env .
+RUN uv venv
+RUN uv sync
+
+COPY .env .env
+COPY config_data config_data
 COPY ./vk_api_bot ./vk_api_bot
 
-WORKDIR ./vk_api_bot
-
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["./vk_api_bot/docker-entrypoint.sh"]

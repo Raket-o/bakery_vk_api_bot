@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-python start_bot.py
+uv run ./vk_api_bot/start_bot.py

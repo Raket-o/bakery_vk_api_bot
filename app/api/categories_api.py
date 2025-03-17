@@ -11,6 +11,7 @@ from app.database.transactions import (
 from app.schemas.categories_sch import ListCategorySchemas
 from app.schemas.products_sch import ListProductSchemas
 
+
 router = APIRouter(prefix="/categories", tags=["categories"])
 
 
